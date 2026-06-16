@@ -9,8 +9,6 @@ __pycache__/
 # Local env
 .env
 
-# Source PDFs and private teaching material
-guiadocentes/
 
 # Generated outputs
 salida/
