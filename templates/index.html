@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Informe en linea de guias docentes</title>
+  <style>
+    :root {
+      --bg: #f0f5f8;
+      --ink: #1f2937;
+      --muted: #5b6778;
+      --surface: #ffffff;
+      --line: #d7dee6;
+      --brand: #005f73;
+      --brand-soft: #d9eff3;
+      --ok: #2f855a;
+      --warn: #b7791f;
+      --ink-soft: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      background:
+        linear-gradient(155deg, #e3f2fd 0%, transparent 35%),
+        radial-gradient(circle at 85% -10%, #c9f1f8 0%, transparent 30%),
+        var(--bg);
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      background: linear-gradient(120deg, #003847, #006d77);
+      color: #ecf8fb;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 18px 36px rgba(0, 56, 71, 0.22);
+      animation: enter 460ms ease-out;
+    }
+    h1 { margin: 0; font-size: clamp(1.5rem, 2.7vw, 2.2rem); }
+    .lead { margin-top: 8px; color: #c9edf3; }
+    .topbar {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+    }
+    input[type="search"] {
+      width: 100%;
+      border: 1px solid #95cdd7;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .counter {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #ecf8fb;
+      white-space: nowrap;
+    }
+    .list {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.07);
+      animation: rise 420ms ease-out;
+    }
+    .title {
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 10px;
+      word-break: break-word;
+    }
+    .propuesta {
+      border: 1px solid #d7e5ec;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .propuesta:last-child {
+      margin-bottom: 0;
+    }
+    .linea {
+      margin-bottom: 8px;
+      line-height: 1.4;
+      color: var(--ink-soft);
+    }
+    .linea:last-child {
+      margin-bottom: 0;
+    }
+    .label {
+      font-weight: 700;
+      color: #0f3e4a;
+      display: inline-block;
+      min-width: 145px;
+    }
+    .empty {
+      margin-top: 20px;
+      background: #fff;
+      border: 1px dashed #b6c4d4;
+      border-radius: 12px;
+      padding: 16px;
+      color: var(--muted);
+    }
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 700px) {
+      .wrap { padding: 14px; }
+      .hero { padding: 16px; }
+      .topbar { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Informe en linea de guias docentes</h1>
+      <p class="lead">Solo propuestas de cambio, agrupadas por guia y ordenadas por nombre.</p>
+      <div class="topbar">
+        <input id="search" type="search" placeholder="Filtrar por nombre de guia..." />
+        <div class="counter"><span id="visible-count">0</span> guias visibles</div>
+      </div>
+    </section>
+
+    {% if reports %}
+      <section class="list" id="list">
+        {% for report in reports %}
+          <article class="card" data-name="{{ report.pdf|lower }}">
+            <div class="title">{{ report.pdf }}</div>
+            {% if report.propuestas %}
+              {% for propuesta in report.propuestas %}
+                <section class="propuesta">
+                  <div class="linea"><span class="label">Seccion:</span> {{ propuesta.seccion }}</div>
+                  <div class="linea"><span class="label">Texto original:</span> {{ propuesta.texto_original }}</div>
+                  <div class="linea"><span class="label">Texto propuesto:</span> {{ propuesta.texto_propuesto }}</div>
+                  <div class="linea"><span class="label">Motivo:</span> {{ propuesta.motivo }}</div>
+                </section>
+              {% endfor %}
+            {% else %}
+              <section class="propuesta">
+                <div class="linea">No hay propuestas de cambio registradas para esta guia.</div>
+              </section>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </section>
+    {% else %}
+      <section class="empty">
+        No hay informes todavia. Ejecuta antes el script de analisis para generar los HTML.
+      </section>
+    {% endif %}
+  </main>
+
+  <script>
+    const search = document.getElementById("search");
+    const cards = Array.from(document.querySelectorAll(".card"));
+    const visibleCount = document.getElementById("visible-count");
+
+    function refreshCount() {
+      const visible = cards.filter((card) => card.style.display !== "none").length;
+      if (visibleCount) {
+        visibleCount.textContent = String(visible);
+      }
+    }
+
+    if (search) {
+      search.addEventListener("input", () => {
+        const q = search.value.trim().toLowerCase();
+        cards.forEach((card) => {
+          const name = card.dataset.name || "";
+          card.style.display = name.includes(q) ? "" : "none";
+        });
+        refreshCount();
+      });
+    }
+
+    refreshCount();
+  </script>
+</body>
+</html>

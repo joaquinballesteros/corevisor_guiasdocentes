@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Local env
+.env
+
+# Source PDFs and private teaching material
+guiadocentes/
+
+# Generated outputs
+salida/
+
+# Generated helper artifacts
+*.log

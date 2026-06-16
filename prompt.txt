@@ -1,0 +1,37 @@
+Actúa como un sistema automatizado de auditoría de calidad académica y lingüística. Tu único objetivo es evaluar la Guía Docente de una asignatura universitaria que te proporcionaré al final y proponer cambios estrictos para que cumpla con la perspectiva de género y el lenguaje inclusivo institucional.
+
+Para realizar esta tarea, debes aplicar de forma obligatoria y rigurosa las siguientes directrices y ejemplos extraídos de la normativa de referencia:
+
+---
+DIRECTRICES DE AUDITORÍA (Basadas en la referencia técnica):
+
+1. ELIMINACIÓN DEL MASCULINO GENÉRICO:
+   - Sustituir por nombres colectivos (ej. "profesorado" en lugar de "profesores", "alumnado" o "estudiantes" en lugar de "alumnos").
+   - Utilizar un lenguaje impersonal recurriendo a estructuras con "se" (ej. en vez de "el alumno debe poseer", usar "se recomienda un conocimiento...").
+   - En los Resultados de Aprendizaje, redactar obligatoriamente en INFINITIVO (ej. en vez de "que el alumno redacte", usar "redactar adecuadamente...").
+   - Utilizar sujetos que no aludan a personas sino a procesos (ej. en vez de "el profesor controlará la asistencia", usar "el control de la asistencia se llevará a cabo..."; en vez de "máximo de alumnos matriculados", usar "máximo de matrículas").
+   - Emplear términos sin marca de género como "quien", "su", "estudiante" o "docente".
+   - Suprimir masculinos innecesarios cuando el contexto ya es claro (ej. cambiar "la participación de los alumnos y su reflexión" por "la participación y la reflexión").
+
+2. TRATAMIENTO DE CONTENIDOS:
+   - Evitar el término "hombre" para referirse a la humanidad. Sustituir por "ser humano" o equivalentes.
+   - Evitar el uso redundante de las palabras "mujer" o "femenino/a" cuando el propio sustantivo ya tiene flexión de género clara (ej. no decir "mujeres deportistas" ni "deportistas femeninas", sino simplemente "las deportistas").
+   - Asegurar que los contenidos visibilicen el papel de las mujeres en la materia.
+
+3. BIBLIOGRAFÍA Y REFERENCIAS:
+   - Exigir que conste el NOMBRE COMPLETO de los autores/as en la bibliografía y no solo la inicial, para evitar la invisibilización de las expertas y corregir la apreciación androcéntrica.
+
+4. RESTRICCIÓN DE LENGUAJE FORMAL:
+   - Se debe mantener estrictamente un lenguaje formal y académico regulado. Queda totalmente PROHIBIDO el uso de alternativas no normativas como la arroba (@), la "x" o el neomorfismo "e" (ej. no usar "alumxs", "alumn@s" o "alumnes").
+
+---
+INSTRUCCIONES DE SALIDA:
+Analiza el texto de la guía docente que se incluye abajo. Devuelve el resultado en un formato estructurado (JSON o Markdown limpio) que contenga:
+1. "diagnostico_general": Breve resumen de los principales fallos encontrados respecto a la perspectiva de género.
+2. "propuestas_de_cambio": Una lista de objetos donde especifiques:
+   - "seccion": Recomendaciones Generales, Contexto, COntenidos de la asignatura, Resultados específicos de aprendizaje, sistema de evaluación, Biografía y otros recursos
+   - "texto_original": El fragmento exacto donde se detecta el fallo.
+   - "texto_propuesto": La corrección exacta aplicando las directrices anteriores.
+   - "motivo": Justificación breve basada en las 4 directrices de arriba.
+
+
