@@ -30,7 +30,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-No hace falta configurar claves API en el estado actual del proyecto.
+Para generar analisis con IA debes configurar OpenAI en entorno:
+
+```bash
+cp .env.example .env
+# edita .env y pon tu OPENAI_API_KEY
+```
 
 ## Flujo actual
 
@@ -61,6 +66,37 @@ Este script no llama a ningun modelo externo. Su funcion actual es:
 Genera o actualiza:
 
 - `salida/analisis/manifest.json`
+
+### 3. Generar analisis (JSON + HTML) en base a `prompt.txt`
+
+```bash
+# procesa solo guias pendientes
+python src/generate_analysis.py --only-pending
+
+# procesa todas las guias (rehace JSON/HTML)
+python src/generate_analysis.py
+```
+
+Este script usa OpenAI y aplica las directrices de `prompt.txt` para generar:
+
+- `salida/analisis/*.json`
+- `salida/analisis/*.html`
+
+Despues ejecuta de nuevo:
+
+```bash
+python src/analyze_guides.py
+```
+
+Opciones utiles:
+
+```bash
+# elegir modelo (por defecto gpt-4o-mini)
+python src/generate_analysis.py --model gpt-4o-mini
+
+# ajustar limites de salida
+python src/generate_analysis.py --max-output-tokens 1800
+```
 
 ## Resultados de analisis
 

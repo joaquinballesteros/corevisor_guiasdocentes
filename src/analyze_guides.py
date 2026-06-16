@@ -118,6 +118,8 @@ def main() -> None:
         print("Pendientes de generar analisis:")
         for item in pendientes:
             print(f"- {item['pdf']} ({item['status']})")
+        print("\nPara generar analisis con OpenAI y prompt.txt:")
+        print("python src/generate_analysis.py --only-pending")
         print()
 
 
